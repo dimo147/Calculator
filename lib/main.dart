@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,109 +10,385 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Calculator',
+      debugShowCheckedModeBanner: false,
+      home: const HomePage(),
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.rubikTextTheme(
+          Theme.of(context)
+              .textTheme, // If this is not set, then ThemeData.light().textTheme is used.
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
+class _HomePageState extends State<HomePage> {
+  String input = '';
+  static const List<List<String>> keys = [
+    ["7", "8", "9"],
+    ["4", "5", "6"],
+    ["1", "2", "3"]
+  ];
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: NeumorphicBackground(
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+                    const Text(
+                      'Calculator',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                    IconButton(
+                        onPressed: () {}, icon: const Icon(Icons.dark_mode)),
+                  ],
+                ),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Expanded(
+              flex: 1,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: constraints.maxHeight / 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: AutoSizeText(
+                                input,
+                                style: const TextStyle(
+                                    fontSize: 35, letterSpacing: 2),
+                                minFontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: constraints.maxHeight / 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: AutoSizeText(
+                                input,
+                                style: const TextStyle(
+                                    fontSize: 45, letterSpacing: 2),
+                                minFontSize: 22,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
             ),
+            Expanded(
+              flex: 2,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          NeumorphicButton(
+                            margin: const EdgeInsets.only(bottom: 15),
+                            child: const SizedBox(
+                              width: 35,
+                              height: 50,
+                              child: Center(
+                                  child: Text(
+                                'c',
+                                style: TextStyle(fontSize: 30),
+                              )),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                input = '';
+                              });
+                            },
+                            style: NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(20)),
+                              color: Colors.grey,
+                              depth: 10,
+                              intensity: 0.7,
+                              surfaceIntensity: 0.35,
+                              lightSource: LightSource.topLeft,
+                            ),
+                          ),
+                          NeumorphicButton(
+                            margin: const EdgeInsets.only(bottom: 15),
+                            child: const SizedBox(
+                              width: 35,
+                              height: 50,
+                              child: Center(
+                                  child: Icon(
+                                MaterialCommunityIcons.plus_minus,
+                                size: 28,
+                              )),
+                            ),
+                            onPressed: () {},
+                            style: NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(20)),
+                              color: Colors.grey,
+                              depth: 10,
+                              intensity: 0.7,
+                              surfaceIntensity: 0.35,
+                              lightSource: LightSource.topLeft,
+                            ),
+                          ),
+                          NeumorphicButton(
+                            margin: const EdgeInsets.only(bottom: 15),
+                            child: const SizedBox(
+                              width: 35,
+                              height: 50,
+                              child: Center(
+                                  child: Text(
+                                '%',
+                                style: TextStyle(fontSize: 25),
+                              )),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                input += '%';
+                              });
+                            },
+                            style: NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(20)),
+                              color: Colors.grey,
+                              depth: 10,
+                              intensity: 0.7,
+                              surfaceIntensity: 0.35,
+                              lightSource: LightSource.topLeft,
+                            ),
+                          ),
+                          NeumorphicButton(
+                            margin: const EdgeInsets.only(bottom: 15),
+                            child: const SizedBox(
+                              width: 35,
+                              height: 50,
+                              child: Center(
+                                  child: Icon(MaterialCommunityIcons.division,
+                                      size: 28, color: Colors.white)),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                input += '÷';
+                              });
+                            },
+                            style: NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(20)),
+                              color: Colors.orange,
+                              depth: 10,
+                              intensity: 0.7,
+                              surfaceIntensity: 0.35,
+                              lightSource: LightSource.topLeft,
+                            ),
+                          ),
+                        ],
+                      ),
+                      for (var i in keys)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            for (var j in i)
+                              NeumorphicButton(
+                                margin: const EdgeInsets.only(bottom: 15),
+                                child: SizedBox(
+                                  width: 35,
+                                  height: 50,
+                                  child: Center(
+                                      child: Text(
+                                    j,
+                                    style: const TextStyle(fontSize: 25),
+                                  )),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    input += j;
+                                  });
+                                },
+                                style: NeumorphicStyle(
+                                  shape: NeumorphicShape.concave,
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(20)),
+                                  color: Colors.white,
+                                  depth: 10,
+                                  intensity: 0.7,
+                                  surfaceIntensity: 0.35,
+                                  lightSource: LightSource.topLeft,
+                                ),
+                              ),
+                            NeumorphicButton(
+                              margin: const EdgeInsets.only(bottom: 15),
+                              child: SizedBox(
+                                width: 35,
+                                height: 50,
+                                child: Center(
+                                    child: i.last == '9'
+                                        ? const Icon(Icons.close,
+                                            color: Colors.white)
+                                        : i.last == '6'
+                                            ? const Icon(Icons.remove,
+                                                color: Colors.white)
+                                            : const Icon(Icons.add,
+                                                color: Colors.white)),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  input += i.last == '9'
+                                      ? 'x'
+                                      : i.last == '6'
+                                          ? "-"
+                                          : "+";
+                                });
+                              },
+                              style: NeumorphicStyle(
+                                shape: NeumorphicShape.concave,
+                                boxShape: NeumorphicBoxShape.roundRect(
+                                    BorderRadius.circular(20)),
+                                color: Colors.orange,
+                                depth: 10,
+                                intensity: 0.7,
+                                surfaceIntensity: 0.35,
+                                lightSource: LightSource.topLeft,
+                              ),
+                            ),
+                          ],
+                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          NeumorphicButton(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: const SizedBox(
+                              width: 125,
+                              height: 50,
+                              child: Center(
+                                  child: Text(
+                                "0",
+                                style: TextStyle(fontSize: 25),
+                              )),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                input += '0';
+                              });
+                            },
+                            style: NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(20)),
+                              color: Colors.white,
+                              depth: 10,
+                              intensity: 0.7,
+                              surfaceIntensity: 0.35,
+                              lightSource: LightSource.topLeft,
+                            ),
+                          ),
+                          NeumorphicButton(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: const SizedBox(
+                              width: 35,
+                              height: 50,
+                              child: Center(
+                                  child: Text(
+                                ".",
+                                style: TextStyle(fontSize: 25),
+                              )),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                input += '.';
+                              });
+                            },
+                            style: NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(20)),
+                              color: Colors.white,
+                              depth: 10,
+                              intensity: 0.7,
+                              surfaceIntensity: 0.35,
+                              lightSource: LightSource.topLeft,
+                            ),
+                          ),
+                          NeumorphicButton(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: const SizedBox(
+                              width: 35,
+                              height: 50,
+                              child: Center(
+                                child: Text(
+                                  '=',
+                                  style: TextStyle(
+                                      fontSize: 25, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {},
+                            style: NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(20)),
+                              color: Colors.orange,
+                              depth: 10,
+                              intensity: 0.7,
+                              surfaceIntensity: 0.35,
+                              lightSource: LightSource.topLeft,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
