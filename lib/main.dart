@@ -1,7 +1,9 @@
+import 'package:math_expressions/math_expressions.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,11 +37,81 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String input = '';
+  String output = '';
+  String operation = '';
+  String upper = '';
+  bool answer = false;
   static const List<List<String>> keys = [
     ["7", "8", "9"],
     ["4", "5", "6"],
     ["1", "2", "3"]
   ];
+
+  static const List<String> symbols = ['x', '-', '+', '%', '.', '÷'];
+
+  Parser p = Parser();
+  ContextModel cm = ContextModel();
+
+  addDigit(String digit) {
+    if (!answer) {
+      setState(() {
+        answer = true;
+      });
+    }
+    if (input.isEmpty && symbols.contains(digit)) {
+      setState(() {});
+    } else if (symbols.contains(digit) &&
+        symbols.contains(input.characters.last)) {
+      setState(() {});
+    } else {
+      setState(() {
+        input += digit;
+      });
+    }
+    preOperate();
+  }
+
+  preOperate() {
+    var x = input;
+    x = x.replaceAll('x', '*');
+    x = x.replaceAll('÷', '/');
+    Expression exp = p.parse(x);
+    double eval = exp.evaluate(EvaluationType.REAL, cm);
+
+    setState(() {
+      output = eval.toString().replaceAll('.0', '');
+      operation = exp
+          .toString()
+          .replaceAll('(', '')
+          .replaceAll(')', '')
+          .replaceAll('.0', '');
+      upper = output;
+    });
+  }
+
+  operate() {
+    var x = input;
+    setState(() {
+      answer = !answer;
+    });
+    x = x.replaceAll('x', '*');
+    x = x.replaceAll('÷', '/');
+    print(x);
+    Expression exp = p.parse(x);
+    double eval = exp.evaluate(EvaluationType.REAL, cm);
+
+    setState(() {
+      output = eval.toString().replaceAll('.0', '');
+      operation = exp
+          .toString()
+          .replaceAll('(', '')
+          .replaceAll(')', '')
+          .replaceAll('.0', '');
+      upper = operation;
+      input = output;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,10 +154,15 @@ class _HomePageState extends State<HomePage> {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: AutoSizeText(
-                                input,
-                                style: const TextStyle(
-                                    fontSize: 35, letterSpacing: 2),
-                                minFontSize: 12,
+                                upper,
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  letterSpacing: 2,
+                                  color: Colors.black.withOpacity(0.5),
+                                ),
+                                minFontSize: 18,
+                                maxLines: 3,
+                                textAlign: TextAlign.right,
                               ),
                             ),
                           ),
@@ -96,14 +173,40 @@ class _HomePageState extends State<HomePage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: AutoSizeText(
-                                input,
-                                style: const TextStyle(
-                                    fontSize: 45, letterSpacing: 2),
-                                minFontSize: 22,
-                              ),
-                            ),
+                                alignment: Alignment.bottomRight,
+                                child: AnimatedSwitcher(
+                                  duration: Duration(milliseconds: 0),
+                                  transitionBuilder: (Widget child,
+                                      Animation<double> animation) {
+                                    final offsetAnimation = Tween<Offset>(
+                                            begin: Offset(0.0, 1.0),
+                                            end: Offset(0.0, 0.0))
+                                        .animate(animation);
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                  child: answer
+                                      ? AutoSizeText(
+                                          input,
+                                          key: ValueKey(1),
+                                          style: const TextStyle(
+                                              fontSize: 45, letterSpacing: 2),
+                                          minFontSize: 22,
+                                          maxLines: 3,
+                                          textAlign: TextAlign.right,
+                                        )
+                                      : AutoSizeText(
+                                          output,
+                                          key: ValueKey(2),
+                                          style: const TextStyle(
+                                              fontSize: 45, letterSpacing: 2),
+                                          minFontSize: 22,
+                                          maxLines: 3,
+                                          textAlign: TextAlign.right,
+                                        ),
+                                )),
                           ),
                         ),
                       ],
@@ -138,6 +241,9 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {
                               setState(() {
                                 input = '';
+                                upper = '';
+                                output = '';
+                                operation = '';
                               });
                             },
                             style: NeumorphicStyle(
@@ -186,9 +292,7 @@ class _HomePageState extends State<HomePage> {
                               )),
                             ),
                             onPressed: () {
-                              setState(() {
-                                input += '%';
-                              });
+                              addDigit('%');
                             },
                             style: NeumorphicStyle(
                               shape: NeumorphicShape.concave,
@@ -211,9 +315,7 @@ class _HomePageState extends State<HomePage> {
                                       size: 28, color: Colors.white)),
                             ),
                             onPressed: () {
-                              setState(() {
-                                input += '÷';
-                              });
+                              addDigit('÷');
                             },
                             style: NeumorphicStyle(
                               shape: NeumorphicShape.concave,
@@ -245,9 +347,7 @@ class _HomePageState extends State<HomePage> {
                                   )),
                                 ),
                                 onPressed: () {
-                                  setState(() {
-                                    input += j;
-                                  });
+                                  addDigit(j);
                                 },
                                 style: NeumorphicStyle(
                                   shape: NeumorphicShape.concave,
@@ -276,13 +376,11 @@ class _HomePageState extends State<HomePage> {
                                                 color: Colors.white)),
                               ),
                               onPressed: () {
-                                setState(() {
-                                  input += i.last == '9'
-                                      ? 'x'
-                                      : i.last == '6'
-                                          ? "-"
-                                          : "+";
-                                });
+                                addDigit(i.last == '9'
+                                    ? 'x'
+                                    : i.last == '6'
+                                        ? "-"
+                                        : "+");
                               },
                               style: NeumorphicStyle(
                                 shape: NeumorphicShape.concave,
@@ -312,9 +410,7 @@ class _HomePageState extends State<HomePage> {
                               )),
                             ),
                             onPressed: () {
-                              setState(() {
-                                input += '0';
-                              });
+                              addDigit('0');
                             },
                             style: NeumorphicStyle(
                               shape: NeumorphicShape.concave,
@@ -339,9 +435,7 @@ class _HomePageState extends State<HomePage> {
                               )),
                             ),
                             onPressed: () {
-                              setState(() {
-                                input += '.';
-                              });
+                              addDigit('.');
                             },
                             style: NeumorphicStyle(
                               shape: NeumorphicShape.concave,
@@ -367,7 +461,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              operate();
+                            },
                             style: NeumorphicStyle(
                               shape: NeumorphicShape.concave,
                               boxShape: NeumorphicBoxShape.roundRect(
