@@ -1,5 +1,5 @@
 name: calculator
-description: A new Flutter project.
+description: Cross Platform Calculator App.
 
 publish_to: 'none'
 
@@ -17,6 +17,9 @@ dependencies:
   auto_size_text: ^3.0.0
   math_expressions: ^2.3.0
   animated_text_kit: ^4.2.1
+  adaptive_theme: ^2.3.0
+  vibration: ^1.7.3
+  just_audio: ^0.9.18
 
 dev_dependencies:
   flutter_test:
@@ -25,5 +28,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/
