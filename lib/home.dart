@@ -69,8 +69,7 @@ class _HomePageState extends State<HomePage> {
           });
         }
       }
-      if (!symbols.contains(digit) &&
-          !symbols.contains(input.characters.last)) {
+      if (!symbols.contains(digit)) {
         preOperate();
       }
     }
@@ -126,11 +125,17 @@ class _HomePageState extends State<HomePage> {
       });
     }
     if (input.isNotEmpty && input.characters.length >= 2) {
-      input = addComma(input.substring(0, input.length - 1));
+      setState(() {
+        input = addComma(input.substring(0, input.length - 1))
+            .replaceAll('*', 'x')
+            .replaceAll('/', '÷');
+      });
     } else {
       clear();
     }
-    preOperate();
+    if (!symbols.contains(input.characters.last)) {
+      preOperate();
+    }
   }
 
   @override
