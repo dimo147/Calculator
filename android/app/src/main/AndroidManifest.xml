@@ -2,7 +2,7 @@
     package="com.example.calculator">
    <uses-permission android:name="android.permission.VIBRATE"/>
    <application
-        android:label="calculator"
+        android:label="Calculator"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
