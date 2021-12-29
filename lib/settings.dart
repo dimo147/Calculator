@@ -4,6 +4,8 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 
 bool vibrate = true;
 bool sound = true;
+String theme = 'default';
+bool dark = false;
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -13,10 +15,9 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  String value = "default";
   @override
   Widget build(BuildContext context) {
-    bool dark = AdaptiveTheme.of(context).mode.isDark;
+    dark = AdaptiveTheme.of(context).mode.isDark;
     Color? text = AdaptiveTheme.of(context).theme.textTheme.button!.color;
     return Scaffold(
       body: Background(
@@ -70,8 +71,7 @@ class _SettingScreenState extends State<SettingScreen> {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (BuildContext context) {
-                    String selectedRadio = 'default';
+                  builder: (BuildContext bcontext) {
                     return AlertDialog(
                       content: StatefulBuilder(
                         builder: (BuildContext context, StateSetter setState) {
@@ -80,39 +80,67 @@ class _SettingScreenState extends State<SettingScreen> {
                             children: [
                               RadioListTile(
                                 title: const Text('Default'),
-                                value: 'default',
-                                groupValue: selectedRadio,
+                                value: "default",
+                                groupValue: theme,
                                 onChanged: (value) {
+                                  setTheme(context, 'default');
                                   setState(() {
-                                    selectedRadio = 'default';
+                                    theme = 'default';
                                   });
+                                  Navigator.pop(context);
+                                  save();
                                 },
                               ),
                               RadioListTile(
                                 title: const Text('Red'),
-                                value: 'red',
-                                groupValue: selectedRadio,
+                                value: "red",
+                                groupValue: theme,
                                 onChanged: (value) {
+                                  setTheme(context, 'red');
                                   setState(() {
-                                    selectedRadio = 'red';
-                                    setTheme(context, 'red');
+                                    theme = 'red';
                                   });
+                                  Navigator.pop(context);
+                                  save();
                                 },
                               ),
                               RadioListTile(
                                 title: const Text('Green'),
-                                value: 'green',
-                                groupValue: selectedRadio,
+                                value: "green",
+                                groupValue: theme,
                                 onChanged: (value) {
-                                  setState(() => selectedRadio = 'green');
+                                  setTheme(context, 'green');
+                                  setState(() {
+                                    theme = 'green';
+                                  });
+                                  Navigator.pop(context);
+                                  save();
                                 },
                               ),
                               RadioListTile(
                                 title: const Text('Blue'),
-                                value: 'blue',
-                                groupValue: selectedRadio,
+                                value: "blue",
+                                groupValue: theme,
                                 onChanged: (value) {
-                                  setState(() => selectedRadio = 'blue');
+                                  setTheme(context, 'blue');
+                                  setState(() {
+                                    theme = 'blue';
+                                  });
+                                  Navigator.pop(context);
+                                  save();
+                                },
+                              ),
+                              RadioListTile(
+                                title: const Text('Purple'),
+                                value: "purple",
+                                groupValue: theme,
+                                onChanged: (value) {
+                                  setTheme(context, 'purple');
+                                  setState(() {
+                                    theme = 'purple';
+                                  });
+                                  Navigator.pop(context);
+                                  save();
                                 },
                               ),
                             ],
@@ -140,6 +168,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       : AdaptiveTheme.of(context).setDark();
                   dark = !dark;
                 });
+                save();
               },
               value: dark,
               activeColor: Colors.green,
@@ -157,6 +186,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 setState(() {
                   vibrate = !vibrate;
                 });
+                save();
               },
               value: vibrate,
               activeColor: Colors.green,
@@ -174,6 +204,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 setState(() {
                   sound = !sound;
                 });
+                save();
               },
               value: sound,
               activeColor: Colors.green,

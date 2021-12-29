@@ -1,9 +1,10 @@
+import 'dart:async';
+import 'package:calculator/func.dart';
 import 'package:calculator/settings.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:calculator/func.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,12 +19,27 @@ class _HomePageState extends State<HomePage> {
   String operation = '';
   String upper = '';
   bool answer = false;
+  Timer? timer;
+  String themel = '';
 
   @override
   void initState() {
     super.initState();
+    load().then((value) {
+      setState(() {
+        setTheme(context, theme);
+      });
+    });
+
     AdaptiveTheme.of(context).modeChangeNotifier.addListener(() {
       setState(() {});
+    });
+    timer = Timer.periodic(const Duration(milliseconds: 1000), (Timer t) async {
+      if (themel != theme) {
+        setState(() {
+          themel = theme;
+        });
+      }
     });
   }
 
@@ -121,6 +137,7 @@ class _HomePageState extends State<HomePage> {
 
     // double screenHeight = MediaQuery.of(context).size.height;
     // double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Background(
         child: Column(
@@ -289,7 +306,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Button(
-                            backColor: secondary,
+                            backColor: primary,
                             onPress: () {
                               addDigit('%');
                             },
@@ -297,7 +314,7 @@ class _HomePageState extends State<HomePage> {
                               '%',
                               style: TextStyle(
                                 fontSize: 25,
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                           ),

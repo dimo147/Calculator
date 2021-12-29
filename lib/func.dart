@@ -4,6 +4,7 @@ import 'package:math_expressions/math_expressions.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:vibration/vibration.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Consts
 const List<String> ops = ['*', '-', '+', '%', '/'];
@@ -17,6 +18,25 @@ const List<List<String>> keys = [
 ];
 
 // Functions
+Future save() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setBool('dark', dark);
+  await prefs.setBool('vibrate', vibrate);
+  await prefs.setBool('sound', sound);
+  await prefs.setString('theme', theme);
+  print(theme);
+}
+
+Future load() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  dark = prefs.getBool('dark') ?? true;
+  vibrate = prefs.getBool('vibrate') ?? true;
+  sound = prefs.getBool('sound') ?? false;
+  theme = prefs.getString('theme') ?? 'default';
+  print('load');
+  print(theme);
+}
+
 String addComma(String inp) {
   var x = inp.replaceAll(',', '');
   x = x.replaceAll('x', '*');
@@ -95,6 +115,51 @@ setTheme(context, mode) {
       dark: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.red,
+        accentColor: Colors.grey,
+        backgroundColor: Colors.grey[900],
+      ),
+    );
+  } else if (mode == 'green') {
+    AdaptiveTheme.of(context).setTheme(
+      light: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.green,
+        accentColor: Colors.grey[400],
+        backgroundColor: Colors.white,
+      ),
+      dark: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.green,
+        accentColor: Colors.grey,
+        backgroundColor: Colors.grey[900],
+      ),
+    );
+  } else if (mode == 'blue') {
+    AdaptiveTheme.of(context).setTheme(
+      light: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.blue,
+        accentColor: Colors.grey[400],
+        backgroundColor: Colors.white,
+      ),
+      dark: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.blue,
+        accentColor: Colors.grey,
+        backgroundColor: Colors.grey[900],
+      ),
+    );
+  } else if (mode == 'purple') {
+    AdaptiveTheme.of(context).setTheme(
+      light: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.purple,
+        accentColor: Colors.grey[400],
+        backgroundColor: Colors.white,
+      ),
+      dark: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.purple,
         accentColor: Colors.grey,
         backgroundColor: Colors.grey[900],
       ),
