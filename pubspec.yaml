@@ -3,14 +3,13 @@ description: Cross Platform Calculator App.
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.1.0
 
 environment:
   sdk: ">=2.15.1 <3.0.0"
 
 dependencies:
   adaptive_theme: ^2.3.0
-  animated_text_kit: ^4.2.1
   auto_size_text: ^3.0.0
   flutter:
     sdk: flutter

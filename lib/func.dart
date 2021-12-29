@@ -24,7 +24,6 @@ Future save() async {
   await prefs.setBool('vibrate', vibrate);
   await prefs.setBool('sound', sound);
   await prefs.setString('theme', theme);
-  print(theme);
 }
 
 Future load() async {
@@ -82,7 +81,7 @@ operator(String inp) {
 vibrator() async {
   if (await Vibration.hasVibrator() &&
       await Vibration.hasCustomVibrationsSupport()) {
-    Vibration.vibrate(duration: 35, amplitude: 125);
+    Vibration.vibrate(duration: 45, amplitude: 125);
   }
 }
 

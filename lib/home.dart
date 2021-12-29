@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   bool answer = false;
   Timer? timer;
   String themel = '';
+  bool crop = false;
 
   @override
   void initState() {
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     AdaptiveTheme.of(context).modeChangeNotifier.addListener(() {
       setState(() {});
     });
-    timer = Timer.periodic(const Duration(milliseconds: 1000), (Timer t) async {
+    timer = Timer.periodic(const Duration(milliseconds: 500), (Timer t) async {
       if (themel != theme) {
         setState(() {
           themel = theme;
@@ -49,19 +50,28 @@ class _HomePageState extends State<HomePage> {
         answer = true;
       });
     }
-    if (input.isEmpty && symbols.contains(digit) ||
-        symbols.contains(digit) && symbols.contains(input.characters.last)) {
-      setState(() {});
-    } else {
-      setState(() {
-        input = addComma(input + digit)
-            .replaceAll('*', 'x')
-            .replaceAll('/', '÷')
-            .replaceAll(' ', '');
-      });
-    }
-    if (!symbols.contains(digit)) {
-      preOperate();
+    if (input.replaceAll(',', '').length <= 52) {
+      if (input.isEmpty && symbols.contains(digit) ||
+          symbols.contains(digit) && symbols.contains(input.characters.last) ||
+          input == '0' && digit == '0') {
+        setState(() {});
+      } else {
+        if (input == '0' && !symbols.contains(digit)) {
+          setState(() {
+            input = digit;
+          });
+        } else {
+          setState(() {
+            input = addComma(input + digit)
+                .replaceAll('*', 'x')
+                .replaceAll('/', '÷')
+                .replaceAll(' ', '');
+          });
+        }
+      }
+      if (!symbols.contains(digit)) {
+        preOperate();
+      }
     }
   }
 
@@ -245,7 +255,6 @@ class _HomePageState extends State<HomePage> {
                                           letterSpacing: 2,
                                           color: text,
                                         ),
-                                        minFontSize: 22,
                                         maxLines: 3,
                                         textAlign: TextAlign.left,
                                       )
@@ -257,7 +266,6 @@ class _HomePageState extends State<HomePage> {
                                           letterSpacing: 2,
                                           color: text,
                                         ),
-                                        minFontSize: 22,
                                         maxLines: 3,
                                         textAlign: TextAlign.left,
                                       ),
@@ -391,7 +399,7 @@ class _HomePageState extends State<HomePage> {
                               shadowDarkColor: shadowDark,
                               shape: NeumorphicShape.concave,
                               boxShape: NeumorphicBoxShape.roundRect(
-                                  BorderRadius.circular(20)),
+                                  BorderRadius.circular(18)),
                               color: back,
                               depth: 10,
                               intensity: 0.7,

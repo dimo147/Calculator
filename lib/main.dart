@@ -2,8 +2,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:calculator/home.dart';
 import 'package:flutter/material.dart';
-import 'package:calculator/func.dart';
-import 'package:calculator/settings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,10 +36,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         home: const HomePage(),
         theme: ThemeData(
-          textTheme: GoogleFonts.rubikTextTheme(
-            Theme.of(context)
-                .textTheme, // If this is not set, then ThemeData.light().textTheme is used.
-          ),
+          textTheme: GoogleFonts.rubikTextTheme(Theme.of(context).textTheme),
         ),
       ),
     );

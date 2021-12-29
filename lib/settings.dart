@@ -59,155 +59,194 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               ),
             ),
-            ListTile(
-              leading: Icon(
-                Icons.colorize,
-                color: text,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 20, 0, 0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Themes',
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: text,
+                  ),
+                ),
               ),
-              title: Text(
-                'Theme',
-                style: TextStyle(color: text, fontSize: 18),
-              ),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext bcontext) {
-                    return AlertDialog(
-                      content: StatefulBuilder(
-                        builder: (BuildContext context, StateSetter setState) {
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              RadioListTile(
-                                title: const Text('Default'),
-                                value: "default",
-                                groupValue: theme,
-                                onChanged: (value) {
-                                  setTheme(context, 'default');
-                                  setState(() {
-                                    theme = 'default';
-                                  });
-                                  Navigator.pop(context);
-                                  save();
-                                },
-                              ),
-                              RadioListTile(
-                                title: const Text('Red'),
-                                value: "red",
-                                groupValue: theme,
-                                onChanged: (value) {
-                                  setTheme(context, 'red');
-                                  setState(() {
-                                    theme = 'red';
-                                  });
-                                  Navigator.pop(context);
-                                  save();
-                                },
-                              ),
-                              RadioListTile(
-                                title: const Text('Green'),
-                                value: "green",
-                                groupValue: theme,
-                                onChanged: (value) {
-                                  setTheme(context, 'green');
-                                  setState(() {
-                                    theme = 'green';
-                                  });
-                                  Navigator.pop(context);
-                                  save();
-                                },
-                              ),
-                              RadioListTile(
-                                title: const Text('Blue'),
-                                value: "blue",
-                                groupValue: theme,
-                                onChanged: (value) {
-                                  setTheme(context, 'blue');
-                                  setState(() {
-                                    theme = 'blue';
-                                  });
-                                  Navigator.pop(context);
-                                  save();
-                                },
-                              ),
-                              RadioListTile(
-                                title: const Text('Purple'),
-                                value: "purple",
-                                groupValue: theme,
-                                onChanged: (value) {
-                                  setTheme(context, 'purple');
-                                  setState(() {
-                                    theme = 'purple';
-                                  });
-                                  Navigator.pop(context);
-                                  save();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    );
-                  },
-                );
-              },
             ),
-            SwitchListTile(
-              secondary: Icon(
-                Icons.dark_mode,
-                color: text,
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: ListTile(
+                leading: Icon(
+                  Icons.colorize,
+                  color: text,
+                ),
+                title: Text(
+                  'Theme',
+                  style: TextStyle(color: text, fontSize: 18),
+                ),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext bcontext) {
+                      return AlertDialog(
+                        content: StatefulBuilder(
+                          builder:
+                              (BuildContext context, StateSetter setState) {
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                RadioListTile(
+                                  title: const Text('Default'),
+                                  value: "default",
+                                  groupValue: theme,
+                                  onChanged: (value) {
+                                    setTheme(context, 'default');
+                                    setState(() {
+                                      theme = 'default';
+                                    });
+                                    Navigator.pop(context);
+                                    save();
+                                  },
+                                ),
+                                RadioListTile(
+                                  title: const Text('Red'),
+                                  value: "red",
+                                  groupValue: theme,
+                                  onChanged: (value) {
+                                    setTheme(context, 'red');
+                                    setState(() {
+                                      theme = 'red';
+                                    });
+                                    Navigator.pop(context);
+                                    save();
+                                  },
+                                ),
+                                RadioListTile(
+                                  title: const Text('Green'),
+                                  value: "green",
+                                  groupValue: theme,
+                                  onChanged: (value) {
+                                    setTheme(context, 'green');
+                                    setState(() {
+                                      theme = 'green';
+                                    });
+                                    Navigator.pop(context);
+                                    save();
+                                  },
+                                ),
+                                RadioListTile(
+                                  title: const Text('Blue'),
+                                  value: "blue",
+                                  groupValue: theme,
+                                  onChanged: (value) {
+                                    setTheme(context, 'blue');
+                                    setState(() {
+                                      theme = 'blue';
+                                    });
+                                    Navigator.pop(context);
+                                    save();
+                                  },
+                                ),
+                                RadioListTile(
+                                  title: const Text('Purple'),
+                                  value: "purple",
+                                  groupValue: theme,
+                                  onChanged: (value) {
+                                    setTheme(context, 'purple');
+                                    setState(() {
+                                      theme = 'purple';
+                                    });
+                                    Navigator.pop(context);
+                                    save();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
-              title: Text(
-                'Dark mode',
-                style: TextStyle(color: text, fontSize: 18),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  dark
-                      ? AdaptiveTheme.of(context).setLight()
-                      : AdaptiveTheme.of(context).setDark();
-                  dark = !dark;
-                });
-                save();
-              },
-              value: dark,
-              activeColor: Colors.green,
             ),
-            SwitchListTile(
-              secondary: Icon(
-                Icons.vibration,
-                color: text,
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: SwitchListTile(
+                secondary: Icon(
+                  Icons.dark_mode,
+                  color: text,
+                ),
+                title: Text(
+                  'Dark mode',
+                  style: TextStyle(color: text, fontSize: 18),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    dark
+                        ? AdaptiveTheme.of(context).setLight()
+                        : AdaptiveTheme.of(context).setDark();
+                    dark = !dark;
+                  });
+                  save();
+                },
+                value: dark,
+                activeColor: Colors.green,
               ),
-              title: Text(
-                'Vibrate',
-                style: TextStyle(color: text, fontSize: 18),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  vibrate = !vibrate;
-                });
-                save();
-              },
-              value: vibrate,
-              activeColor: Colors.green,
             ),
-            SwitchListTile(
-              secondary: Icon(
-                Icons.touch_app,
-                color: text,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 20, 0, 0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Keys',
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: text,
+                  ),
+                ),
               ),
-              title: Text(
-                'Click sound',
-                style: TextStyle(color: text, fontSize: 18),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: SwitchListTile(
+                secondary: Icon(
+                  Icons.vibration,
+                  color: text,
+                ),
+                title: Text(
+                  'Vibrate',
+                  style: TextStyle(color: text, fontSize: 18),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    vibrate = !vibrate;
+                  });
+                  save();
+                },
+                value: vibrate,
+                activeColor: Colors.green,
               ),
-              onChanged: (value) {
-                setState(() {
-                  sound = !sound;
-                });
-                save();
-              },
-              value: sound,
-              activeColor: Colors.green,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: SwitchListTile(
+                secondary: Icon(
+                  Icons.touch_app,
+                  color: text,
+                ),
+                title: Text(
+                  'Click sound',
+                  style: TextStyle(color: text, fontSize: 18),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    sound = !sound;
+                  });
+                  save();
+                },
+                value: sound,
+                activeColor: Colors.green,
+              ),
             ),
           ],
         ),
