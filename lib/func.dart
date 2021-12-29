@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:calculator/settings.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:vibration/vibration.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:show_up_animation/show_up_animation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Consts
@@ -225,37 +228,62 @@ class _ButtonState extends State<Button> {
         ? Colors.grey[900]
         : Colors.white;
 
-    return NeumorphicButton(
-      margin: const EdgeInsets.only(bottom: 15),
-      child: SizedBox(
-        width: buttonWidth,
-        height: buttonHeight,
-        child: Center(
-          child: widget.text,
+    return FadeUp(
+      child: NeumorphicButton(
+        margin: const EdgeInsets.only(bottom: 15),
+        child: SizedBox(
+          width: buttonWidth,
+          height: buttonHeight,
+          child: Center(
+            child: widget.text,
+          ),
+        ),
+        onPressed: () async {
+          widget.onPress();
+          if (vibrate) {
+            vibrator();
+          }
+          if (sound) {
+            var duration = await player.setAsset('assets/click.mp3');
+            player.setVolume(100);
+            player.play();
+          }
+        },
+        style: NeumorphicStyle(
+          shadowLightColor: shadowLight,
+          shadowDarkColor: shadowDark,
+          shape: NeumorphicShape.concave,
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
+          color: widget.backColor,
+          depth: 10,
+          intensity: 0.7,
+          surfaceIntensity: 0.35,
+          lightSource: LightSource.topLeft,
         ),
       ),
-      onPressed: () async {
-        widget.onPress();
-        if (vibrate) {
-          vibrator();
-        }
-        if (sound) {
-          var duration = await player.setAsset('assets/click.mp3');
-          player.setVolume(100);
-          player.play();
-        }
-      },
-      style: NeumorphicStyle(
-        shadowLightColor: shadowLight,
-        shadowDarkColor: shadowDark,
-        shape: NeumorphicShape.concave,
-        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
-        color: widget.backColor,
-        depth: 10,
-        intensity: 0.7,
-        surfaceIntensity: 0.35,
-        lightSource: LightSource.topLeft,
-      ),
+    );
+  }
+}
+
+class FadeUp extends StatefulWidget {
+  FadeUp({Key? key, required this.child}) : super(key: key);
+  Widget child;
+
+  @override
+  _FadeUpState createState() => _FadeUpState();
+}
+
+class _FadeUpState extends State<FadeUp> {
+  late Random rnd = Random();
+  @override
+  Widget build(BuildContext context) {
+    return ShowUpAnimation(
+      delayStart: Duration(seconds: 0),
+      animationDuration: Duration(milliseconds: 300 + rnd.nextInt(500)),
+      curve: Curves.bounceIn,
+      direction: Direction.vertical,
+      offset: 0.2,
+      child: widget.child,
     );
   }
 }

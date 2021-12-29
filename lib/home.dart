@@ -159,40 +159,43 @@ class _HomePageState extends State<HomePage> {
               margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
+                child: FadeUp(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SettingScreen(),
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.settings, color: text)),
+                      Text(
+                        'Calculator',
+                        style: TextStyle(fontSize: 22, color: text),
+                      ),
+                      IconButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SettingScreen(),
-                            ),
-                          );
+                          setState(() {
+                            AdaptiveTheme.of(context).brightness ==
+                                    Brightness.dark
+                                ? AdaptiveTheme.of(context).setLight()
+                                : AdaptiveTheme.of(context).setDark();
+                          });
                         },
-                        icon: Icon(Icons.settings, color: text)),
-                    Text(
-                      'Calculator',
-                      style: TextStyle(fontSize: 22, color: text),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
+                        icon: Icon(
                           AdaptiveTheme.of(context).brightness ==
                                   Brightness.dark
-                              ? AdaptiveTheme.of(context).setLight()
-                              : AdaptiveTheme.of(context).setDark();
-                        });
-                      },
-                      icon: Icon(
-                        AdaptiveTheme.of(context).brightness == Brightness.dark
-                            ? Icons.light_mode
-                            : Icons.dark_mode,
-                        color: text,
+                              ? Icons.light_mode
+                              : Icons.dark_mode,
+                          color: text,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -284,7 +287,7 @@ class _HomePageState extends State<HomePage> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -380,31 +383,33 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          NeumorphicButton(
-                            margin: const EdgeInsets.only(bottom: 15),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width / 3,
-                              height: buttonHeight,
-                              child: Center(
-                                  child: Text(
-                                "0",
-                                style: TextStyle(fontSize: 25, color: text),
-                              )),
-                            ),
-                            onPressed: () {
-                              addDigit('0');
-                            },
-                            style: NeumorphicStyle(
-                              shadowLightColor: shadowLight,
-                              shadowDarkColor: shadowDark,
-                              shape: NeumorphicShape.concave,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                  BorderRadius.circular(18)),
-                              color: back,
-                              depth: 10,
-                              intensity: 0.7,
-                              surfaceIntensity: 0.35,
-                              lightSource: LightSource.topLeft,
+                          FadeUp(
+                            child: NeumorphicButton(
+                              margin: const EdgeInsets.only(bottom: 15),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width / 3,
+                                height: buttonHeight,
+                                child: Center(
+                                    child: Text(
+                                  "0",
+                                  style: TextStyle(fontSize: 25, color: text),
+                                )),
+                              ),
+                              onPressed: () {
+                                addDigit('0');
+                              },
+                              style: NeumorphicStyle(
+                                shadowLightColor: shadowLight,
+                                shadowDarkColor: shadowDark,
+                                shape: NeumorphicShape.concave,
+                                boxShape: NeumorphicBoxShape.roundRect(
+                                    BorderRadius.circular(18)),
+                                color: back,
+                                depth: 10,
+                                intensity: 0.7,
+                                surfaceIntensity: 0.35,
+                                lightSource: LightSource.topLeft,
+                              ),
                             ),
                           ),
                           Button(
