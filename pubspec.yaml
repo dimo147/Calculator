@@ -39,19 +39,16 @@ flutter_icons:
 
   android: "launcher_icon"
   ios: true
-  image_path: "assets/Icon.png"
+  image_path: "assets/icon.png"
 
 flutter_native_splash:
-
   # flutter pub run flutter_native_splash:create
-  # flutter pub run flutter_native_splash:remove
-
-  color: "#0A0A0A"
-  
+  color: "#0B0B0B"
   image: assets/splash.png
-
+  color_dark: "#0B0B0B"
+  image_dark: assets/splash.png
   android: true
-  ios: true
+  ios: false
   web: false
-
-  android_gravity: center
+  android_gravity: fill_horizontal #center, fill, fill_horizontal
+  fullscreen: true

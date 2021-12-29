@@ -69,7 +69,8 @@ class _HomePageState extends State<HomePage> {
           });
         }
       }
-      if (!symbols.contains(digit)) {
+      if (!symbols.contains(digit) &&
+          !symbols.contains(input.characters.last)) {
         preOperate();
       }
     }
