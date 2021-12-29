@@ -60,7 +60,9 @@ class _HomePageState extends State<HomePage> {
             .replaceAll(' ', '');
       });
     }
-    preOperate();
+    if (!symbols.contains(digit)) {
+      preOperate();
+    }
   }
 
   preOperate() {
@@ -80,11 +82,12 @@ class _HomePageState extends State<HomePage> {
 
     var x = operator(input);
     double eval = x[0];
-    String exp = x[1];
+    String exp = x[1].toString();
 
     setState(() {
       output =
           addComma(isInteger(eval) ? eval.toString() : eval.toStringAsFixed(0));
+      input = output;
       operation = addComma(exp
           .toString()
           .replaceAll('(', '')
@@ -93,7 +96,6 @@ class _HomePageState extends State<HomePage> {
           .replaceAll('*', 'x')
           .replaceAll('/', '÷'));
       upper = operation;
-      input = output;
     });
   }
 

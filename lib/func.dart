@@ -33,8 +33,6 @@ Future load() async {
   vibrate = prefs.getBool('vibrate') ?? true;
   sound = prefs.getBool('sound') ?? false;
   theme = prefs.getString('theme') ?? 'default';
-  print('load');
-  print(theme);
 }
 
 String addComma(String inp) {
