@@ -1,6 +1,6 @@
 # calculator
 
-A Calculator App Written in Fluuter.
+A Calculator App Written in Flutter.
 
 ## Getting Started
 
