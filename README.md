@@ -1,21 +1,16 @@
 # calculator
 
-A Calculator App Written in Flutter.
+A new Flutter project.
 
 ## Getting Started
 
-### download required packages.
-```bash
-flutter pub get
-```
+This project is a starting point for a Flutter application.
 
-### run the app.
-```bash
-flutter run --no-sound-null-safety
-```
+A few resources to get you started if this is your first Flutter project:
 
-### build the realese for android.
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-```bash
-flutter build apk --no-sound-null-safety
-```
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
