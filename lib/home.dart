@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'package:calculator/func.dart';
+import 'package:calculator/widgets.dart';
 import 'package:calculator/settings.dart';
+import 'package:calculator/fuctions.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -14,14 +15,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String input = '';
-  String output = '';
-  String operation = '';
-  String upper = '';
-  bool answer = false;
   Timer? timer;
-  String themel = '';
+  String input = '';
+  String upper = '';
   bool crop = false;
+  String output = '';
+  String themel = '';
+  bool answer = false;
+  String operation = '';
 
   @override
   void initState() {
@@ -205,89 +206,95 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 3.2,
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: constraints.maxHeight / 2,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: AutoSizeText(
-                              upper,
-                              style: TextStyle(
-                                fontSize: 30,
-                                letterSpacing: 2,
-                                color: text!.withOpacity(0.5),
+            FractionallySizedBox(
+              widthFactor: 0.9,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 4,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: constraints.maxHeight / 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: AutoSizeText(
+                                upper,
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  letterSpacing: 2,
+                                  color: text!.withOpacity(0.5),
+                                ),
+                                minFontSize: 18,
+                                maxLines: 3,
+                                textAlign: TextAlign.left,
                               ),
-                              minFontSize: 18,
-                              maxLines: 3,
-                              textAlign: TextAlign.left,
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: constraints.maxHeight / 2,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 0),
-                              transitionBuilder:
-                                  (Widget child, Animation<double> animation) {
-                                final offsetAnimation = Tween<Offset>(
-                                        begin: const Offset(0.0, 1.0),
-                                        end: const Offset(0.0, 0.0))
-                                    .animate(animation);
-                                return SlideTransition(
-                                  position: offsetAnimation,
-                                  child: child,
-                                );
-                              },
-                              child: answer
-                                  ? AutoSizeText(
-                                      input,
-                                      key: const ValueKey(1),
-                                      style: TextStyle(
-                                        fontSize: 45,
-                                        letterSpacing: 2,
-                                        color: text,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: constraints.maxHeight / 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 0),
+                                transitionBuilder: (Widget child,
+                                    Animation<double> animation) {
+                                  final offsetAnimation = Tween<Offset>(
+                                          begin: const Offset(0.0, 1.0),
+                                          end: const Offset(0.0, 0.0))
+                                      .animate(animation);
+                                  return SlideTransition(
+                                    position: offsetAnimation,
+                                    child: child,
+                                  );
+                                },
+                                child: answer
+                                    ? AutoSizeText(
+                                        input,
+                                        key: const ValueKey(1),
+                                        style: TextStyle(
+                                          fontSize: 45,
+                                          letterSpacing: 2,
+                                          color: text,
+                                        ),
+                                        maxLines: 3,
+                                        textAlign: TextAlign.left,
+                                      )
+                                    : AutoSizeText(
+                                        output,
+                                        key: const ValueKey(2),
+                                        style: TextStyle(
+                                          fontSize: 45,
+                                          letterSpacing: 2,
+                                          color: text,
+                                        ),
+                                        maxLines: 3,
+                                        textAlign: TextAlign.left,
                                       ),
-                                      maxLines: 3,
-                                      textAlign: TextAlign.left,
-                                    )
-                                  : AutoSizeText(
-                                      output,
-                                      key: const ValueKey(2),
-                                      style: TextStyle(
-                                        fontSize: 45,
-                                        letterSpacing: 2,
-                                        color: text,
-                                      ),
-                                      maxLines: 3,
-                                      textAlign: TextAlign.left,
-                                    ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  );
-                },
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
+            const Spacer(),
             SizedBox(
-              width: MediaQuery.of(context).size.width,
+              width: (MediaQuery.of(context).size.width < 600)
+                  ? MediaQuery.of(context).size.width
+                  : 600,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Column(
@@ -404,8 +411,13 @@ class _HomePageState extends State<HomePage> {
                               lightSource: LightSource.topLeft,
                             ),
                             child: SizedBox(
-                              width: MediaQuery.of(context).size.width / 3,
-                              height: buttonHeight,
+                              width: (MediaQuery.of(context).size.width < 600)
+                                  ? ((MediaQuery.of(context).size.width / 6) *
+                                      2)
+                                  : 200,
+                              height: (MediaQuery.of(context).size.width < 600)
+                                  ? MediaQuery.of(context).size.width / 7
+                                  : 80,
                               child: Center(
                                   child: Text(
                                 "0",

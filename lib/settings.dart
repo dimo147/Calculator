@@ -1,5 +1,6 @@
-import 'package:calculator/func.dart';
 import 'package:flutter/material.dart';
+import 'package:calculator/widgets.dart';
+import 'package:calculator/fuctions.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 
 bool vibrate = true;
