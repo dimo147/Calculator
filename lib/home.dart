@@ -141,8 +141,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double buttonHeight = MediaQuery.of(context).size.width / 7;
-
     Color primary = AdaptiveTheme.of(context).theme.primaryColor;
     Color secondary = AdaptiveTheme.of(context).theme.accentColor;
     Color back = AdaptiveTheme.of(context).theme.backgroundColor;
@@ -153,9 +151,6 @@ class _HomePageState extends State<HomePage> {
         ? Colors.grey[900]
         : Colors.white;
     Color? text = AdaptiveTheme.of(context).theme.textTheme.button!.color;
-
-    // double screenHeight = MediaQuery.of(context).size.height;
-    // double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Background(

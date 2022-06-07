@@ -1,10 +1,7 @@
-import 'dart:math';
 import 'package:calculator/settings.dart';
 import 'package:vibration/vibration.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:show_up_animation/show_up_animation.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
