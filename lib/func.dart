@@ -43,7 +43,7 @@ String addComma(String inp) {
   List<String> lst = [];
   List<String> last = [];
   for (var i in ops) {
-    x = x.replaceAll(i, " " + i + " ");
+    x = x.replaceAll(i, " $i ");
   }
   lst = x.split(' ');
   for (var j in lst) {
@@ -169,11 +169,11 @@ setTheme(context, mode) {
 
 // Widgets
 class Background extends StatefulWidget {
-  Background({Key? key, required this.child}) : super(key: key);
-  Widget child;
+  const Background({Key? key, required this.child}) : super(key: key);
+  final Widget child;
 
   @override
-  _BackgroundState createState() => _BackgroundState();
+  State<Background> createState() => _BackgroundState();
 }
 
 class _BackgroundState extends State<Background> {
@@ -199,18 +199,18 @@ class _BackgroundState extends State<Background> {
 }
 
 class Button extends StatefulWidget {
-  Button({
+  const Button({
     Key? key,
     required this.backColor,
     required this.text,
     required this.onPress,
   }) : super(key: key);
-  Color backColor;
-  Widget text;
-  Function onPress;
+  final Color backColor;
+  final Widget text;
+  final Function onPress;
 
   @override
-  _ButtonState createState() => _ButtonState();
+  State<Button> createState() => _ButtonState();
 }
 
 class _ButtonState extends State<Button> {
@@ -231,20 +231,12 @@ class _ButtonState extends State<Button> {
     return FadeUp(
       child: NeumorphicButton(
         margin: const EdgeInsets.only(bottom: 15),
-        child: SizedBox(
-          width: buttonWidth,
-          height: buttonHeight,
-          child: Center(
-            child: widget.text,
-          ),
-        ),
         onPressed: () async {
           widget.onPress();
           if (vibrate) {
             vibrator();
           }
           if (sound) {
-            var duration = await player.setAsset('assets/click.mp3');
             player.setVolume(100);
             player.play();
           }
@@ -260,17 +252,24 @@ class _ButtonState extends State<Button> {
           surfaceIntensity: 0.35,
           lightSource: LightSource.topLeft,
         ),
+        child: SizedBox(
+          width: buttonWidth,
+          height: buttonHeight,
+          child: Center(
+            child: widget.text,
+          ),
+        ),
       ),
     );
   }
 }
 
 class FadeUp extends StatefulWidget {
-  FadeUp({Key? key, required this.child}) : super(key: key);
-  Widget child;
+  const FadeUp({Key? key, required this.child}) : super(key: key);
+  final Widget child;
 
   @override
-  _FadeUpState createState() => _FadeUpState();
+  State<FadeUp> createState() => _FadeUpState();
 }
 
 class _FadeUpState extends State<FadeUp> {

@@ -1,21 +1,17 @@
 # calculator
 
-A Calculator App Written in Flutter.
+A cross platform mobile calculator.
 
 ## Getting Started
 
-### download required packages.
+# depencies
+
 ```bash
 flutter pub get
 ```
 
-### run the app.
-```bash
-flutter run --no-sound-null-safety
-```
-
-### build the realese for android.
+# run
 
 ```bash
-flutter build apk --no-sound-null-safety
+flutter run
 ```

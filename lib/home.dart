@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -392,15 +392,6 @@ class _HomePageState extends State<HomePage> {
                           FadeUp(
                             child: NeumorphicButton(
                               margin: const EdgeInsets.only(bottom: 15),
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 3,
-                                height: buttonHeight,
-                                child: Center(
-                                    child: Text(
-                                  "0",
-                                  style: TextStyle(fontSize: 25, color: text),
-                                )),
-                              ),
                               onPressed: () {
                                 addDigit('0');
                               },
@@ -415,6 +406,15 @@ class _HomePageState extends State<HomePage> {
                                 intensity: 0.7,
                                 surfaceIntensity: 0.35,
                                 lightSource: LightSource.topLeft,
+                              ),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width / 3,
+                                height: buttonHeight,
+                                child: Center(
+                                    child: Text(
+                                  "0",
+                                  style: TextStyle(fontSize: 25, color: text),
+                                )),
                               ),
                             ),
                           ),
