@@ -1,12 +1,11 @@
 import 'dart:math';
-
 import 'package:calculator/settings.dart';
-import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:math_expressions/math_expressions.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:vibration/vibration.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:math_expressions/math_expressions.dart';
 import 'package:show_up_animation/show_up_animation.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Consts
@@ -82,8 +81,9 @@ operator(String inp) {
 }
 
 vibrator() async {
-  if (await Vibration.hasVibrator() &&
-      await Vibration.hasCustomVibrationsSupport()) {
+  bool? amp = await Vibration.hasAmplitudeControl();
+  bool? custom = await Vibration.hasCustomVibrationsSupport();
+  if ((amp != null && amp) && (custom != null && custom)) {
     Vibration.vibrate(duration: 45, amplitude: 125);
   }
 }
@@ -278,7 +278,7 @@ class _FadeUpState extends State<FadeUp> {
   @override
   Widget build(BuildContext context) {
     return ShowUpAnimation(
-      delayStart: Duration(seconds: 0),
+      delayStart: const Duration(seconds: 0),
       animationDuration: Duration(milliseconds: 300 + rnd.nextInt(500)),
       curve: Curves.bounceIn,
       direction: Direction.vertical,

@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:calculator/func.dart';
 import 'package:calculator/settings.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_icons_null_safety/flutter_icons_null_safety.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
