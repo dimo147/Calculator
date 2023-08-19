@@ -1,7 +1,6 @@
 import 'dart:math';
+import 'package:flutter/services.dart';
 import 'package:calculator/settings.dart';
-import 'package:vibration/vibration.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:show_up_animation/show_up_animation.dart';
@@ -81,11 +80,7 @@ operator(String inp) {
 }
 
 vibrator() async {
-  bool? amp = await Vibration.hasAmplitudeControl();
-  bool? custom = await Vibration.hasCustomVibrationsSupport();
-  if ((amp != null && amp) && (custom != null && custom)) {
-    Vibration.vibrate(duration: 45, amplitude: 125);
-  }
+  HapticFeedback.mediumImpact();
 }
 
 setTheme(context, mode) {
@@ -94,13 +89,13 @@ setTheme(context, mode) {
       light: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.orange,
-        accentColor: Colors.grey[400],
+        secondaryHeaderColor: Colors.grey[400],
         backgroundColor: Colors.white,
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.orange,
-        accentColor: Colors.grey,
+        secondaryHeaderColor: Colors.grey,
         backgroundColor: Colors.grey[900],
       ),
     );
@@ -109,13 +104,13 @@ setTheme(context, mode) {
       light: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.red,
-        accentColor: Colors.grey[400],
+        secondaryHeaderColor: Colors.grey[400],
         backgroundColor: Colors.white,
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.red,
-        accentColor: Colors.grey,
+        secondaryHeaderColor: Colors.grey,
         backgroundColor: Colors.grey[900],
       ),
     );
@@ -124,13 +119,13 @@ setTheme(context, mode) {
       light: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.green,
-        accentColor: Colors.grey[400],
+        secondaryHeaderColor: Colors.grey[400],
         backgroundColor: Colors.white,
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.green,
-        accentColor: Colors.grey,
+        secondaryHeaderColor: Colors.grey,
         backgroundColor: Colors.grey[900],
       ),
     );
@@ -139,13 +134,13 @@ setTheme(context, mode) {
       light: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.blue,
-        accentColor: Colors.grey[400],
+        secondaryHeaderColor: Colors.grey[400],
         backgroundColor: Colors.white,
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.blue,
-        accentColor: Colors.grey,
+        secondaryHeaderColor: Colors.grey,
         backgroundColor: Colors.grey[900],
       ),
     );
@@ -154,13 +149,13 @@ setTheme(context, mode) {
       light: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.purple,
-        accentColor: Colors.grey[400],
+        secondaryHeaderColor: Colors.grey[400],
         backgroundColor: Colors.white,
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.purple,
-        accentColor: Colors.grey,
+        secondaryHeaderColor: Colors.grey,
         backgroundColor: Colors.grey[900],
       ),
     );
@@ -214,8 +209,6 @@ class Button extends StatefulWidget {
 }
 
 class _ButtonState extends State<Button> {
-  final player = AudioPlayer();
-
   @override
   Widget build(BuildContext context) {
     double buttonWidth = MediaQuery.of(context).size.width / 10;
@@ -237,8 +230,7 @@ class _ButtonState extends State<Button> {
             vibrator();
           }
           if (sound) {
-            player.setVolume(100);
-            player.play();
+            SystemSound.play(SystemSoundType.click);
           }
         },
         style: NeumorphicStyle(

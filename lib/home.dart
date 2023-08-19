@@ -32,9 +32,9 @@ class _HomePageState extends State<HomePage> {
       });
     });
 
-    AdaptiveTheme.of(context).modeChangeNotifier.addListener(() {
-      setState(() {});
-    });
+    // AdaptiveTheme.of(context).modeChangeNotifier.addListener(() {
+    //   setState(() {});
+    // });
     timer = Timer.periodic(const Duration(milliseconds: 500), (Timer t) async {
       if (themel != theme) {
         setState(() {
@@ -133,8 +133,10 @@ class _HomePageState extends State<HomePage> {
     } else {
       clear();
     }
-    if (!symbols.contains(input.characters.last)) {
-      preOperate();
+    if (input.isNotEmpty) {
+      if (!symbols.contains(input.characters.last)) {
+        preOperate();
+      }
     }
   }
 
@@ -143,7 +145,7 @@ class _HomePageState extends State<HomePage> {
     double buttonHeight = MediaQuery.of(context).size.width / 7;
 
     Color primary = AdaptiveTheme.of(context).theme.primaryColor;
-    Color secondary = AdaptiveTheme.of(context).theme.accentColor;
+    Color secondary = AdaptiveTheme.of(context).theme.secondaryHeaderColor;
     Color back = AdaptiveTheme.of(context).theme.backgroundColor;
     Color? shadowDark = AdaptiveTheme.of(context).brightness == Brightness.dark
         ? Colors.black87

@@ -21,13 +21,13 @@ class _MyAppState extends State<MyApp> {
       light: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.orange,
-        accentColor: Colors.grey[400],
+        secondaryHeaderColor: Colors.grey[400],
         backgroundColor: Colors.white,
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.orange,
-        accentColor: Colors.grey,
+        secondaryHeaderColor: Colors.grey,
         backgroundColor: Colors.grey[900],
       ),
       initial: AdaptiveThemeMode.dark,
