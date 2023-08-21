@@ -66,17 +66,25 @@ String addComma(String inp) {
 }
 
 bool isInteger(num value) {
-  var isInt = value is int || !(value.toString().split('.')[1] == '0');
-  return isInt;
+  try {
+    var isInt = value is int || !(value.toString().split('.')[1] == '0');
+    return isInt;
+  } catch (e) {
+    return false;
+  }
 }
 
 operator(String inp) {
-  var x = inp.replaceAll(',', '');
-  x = x.replaceAll('x', '*');
-  x = x.replaceAll('÷', '/');
-  Expression exp = p.parse(x);
-  double eval = exp.evaluate(EvaluationType.REAL, cm);
-  return [eval, exp];
+  try {
+    var x = inp.replaceAll(',', '');
+    x = x.replaceAll('x', '*');
+    x = x.replaceAll('÷', '/');
+    Expression exp = p.parse(x);
+    double eval = exp.evaluate(EvaluationType.REAL, cm);
+    return [eval, exp];
+  } catch (e) {
+    return "Error";
+  }
 }
 
 vibrator() async {

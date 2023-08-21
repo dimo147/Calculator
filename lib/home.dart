@@ -32,9 +32,6 @@ class _HomePageState extends State<HomePage> {
       });
     });
 
-    // AdaptiveTheme.of(context).modeChangeNotifier.addListener(() {
-    //   setState(() {});
-    // });
     timer = Timer.periodic(const Duration(milliseconds: 500), (Timer t) async {
       if (themel != theme) {
         setState(() {
@@ -75,13 +72,26 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  bool isNumeric(s) {
+    s = s.toString();
+    return double.tryParse(s) != null;
+  }
+
   preOperate() {
-    double eval = operator(input)[0];
+    var eval = operator(input)[0];
 
     setState(() {
-      output =
-          addComma(isInteger(eval) ? eval.toString() : eval.toStringAsFixed(0));
-      upper = output;
+      if (isNumeric(eval)) {
+        output = addComma(
+            isInteger(eval) ? eval.toString() : eval.toStringAsFixed(0));
+        upper = output;
+      } else {
+        if (upper == "Error") {
+          upper = "Error";
+        } else {
+          upper = eval;
+        }
+      }
     });
   }
 
@@ -89,24 +99,23 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       answer = !answer;
     });
+    try {
+      var x = operator(input);
+      double eval = x[0];
 
-    var x = operator(input);
-    double eval = x[0];
-    String exp = x[1].toString();
-
-    setState(() {
-      output =
-          addComma(isInteger(eval) ? eval.toString() : eval.toStringAsFixed(0));
-      input = output;
-      operation = addComma(exp
-          .toString()
-          .replaceAll('(', '')
-          .replaceAll(')', '')
-          .replaceAll('.0', '')
-          .replaceAll('*', 'x')
-          .replaceAll('/', '÷'));
-      upper = operation;
-    });
+      setState(() {
+        output = addComma(
+            isInteger(eval) ? eval.toString() : eval.toStringAsFixed(0));
+        upper = input;
+        input = output;
+      });
+    } catch (e) {
+      setState(() {
+        output = "Error";
+        input = "Error";
+        upper = "Error";
+      });
+    }
   }
 
   clear() {
