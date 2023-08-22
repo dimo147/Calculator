@@ -3,7 +3,7 @@ description: A simple mobile calculator
 
 publish_to: 'none' 
 
-version: 1.1.0+2
+version: 1.1.5+3
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
