@@ -1,10 +1,11 @@
 # calculator
 
 A cross platform mobile calculator.
-![main page](https://github.com/dimo147/Calculator/blob/main/assets/images/mobile/Screenshot_1692442659.png)
-![main page](https://github.com/dimo147/Calculator/blob/main/assets/images/mobile/Screenshot_1692442662.png)
-![setting](https://github.com/dimo147/Calculator/blob/main/assets/images/mobile/Screenshot_1692442668.png)
-![setting](https://github.com/dimo147/Calculator/blob/main/assets/images/mobile/Screenshot_1692442669.png)
+
+<img src="https://github.com/dimo147/Calculator/blob/main/assets/images/mobile/Screenshot_1692442659.png" width=20% height=20%>
+<img src="https://github.com/dimo147/Calculator/blob/main/assets/images/mobile/Screenshot_1692442662.png" width=20% height=20%>
+<img src="https://github.com/dimo147/Calculator/blob/main/assets/images/mobile/Screenshot_1692442668.png" width=20% height=20%>
+<img src="https://github.com/dimo147/Calculator/blob/main/assets/images/mobile/Screenshot_1692442669.png" width=20% height=20%>
 
 ## Getting Started
 
